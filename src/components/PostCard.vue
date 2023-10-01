@@ -6,7 +6,6 @@ interface Props {
 }
 
 defineProps<Props>()
-
 // defineProps({
 //   img: Object,
 //   title: String,

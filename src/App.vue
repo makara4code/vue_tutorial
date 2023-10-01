@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import PostCard from "./components/PostCard.vue";
+
 const posts = [
   {
     id: 1,
@@ -28,20 +30,74 @@ const posts = [
     },
   },
 ];
+
+const count = ref(0)
+
+function onClickPost(postId: number) {
+  // count.value ++;
+  // count.value += 1;
+  // count.value = count.value + 1
+  console.log(event)
+  console.log("Post ", postId, "clicked!")
+}
+
+const onClickAnchorTag = () => {
+  console.log("Anchor Tag Clicked!")
+}
+
+const onFormSubmit = () => {
+  console.log("Form sumitted!")
+}
+
+const clearCount = () => {
+  count.value = 0;
+}
 </script>
 
 <template>
   <div class="container">
+    <!-- Methods Handler -->
     <PostCard
       v-for="post in posts"
       :img="post.img"
       :title="post.title"
       :tag="post.tag"
+      @click="onClickPost(post.id)"
     />
+    
+    <!-- Inline Hander -->
+    <div class="card my-style" >
+      <div>{{ count }}</div>
+      <button @click="count++">Add 1</button>
+    </div>
+
+    <!-- Event's Propagation -->
+    <!-- TODO: Research more -->
+    <div class="card my-style">
+      <a @click.stop="onClickAnchorTag">Click Me</a>
+    </div>
+
+    <div class="card my-style">
+      <form @submit.prevent="onFormSubmit">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="card my-style">
+      <input @keyup.alt.enter="clearCount" v-model="count" />
+    </div>
+
   </div>
 </template>
 
 <style>
+.my-style {
+  width: 300px;
+  padding: 20px;
+  width: 300px;
+  border: 1px solid grey;
+  text-align: center;
+}
 .container {
   display: flex;
   gap: 20px;
